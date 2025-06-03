@@ -87,9 +87,7 @@ Following, I want to check the 95% HDI of the posterior distribution whether it 
 order_s <- order(data$s)
 ppc_intervals(y = data$s[order_s], 
               yrep = subset_draws(lmm_draws, variable = "s") %>% `[`(, order_s)) + 
-  scale_x_discrete(name = "Subject effect (s)") + 
-  gghighlight(y > 0)
-
+  scale_x_discrete(name = "Subject effect (s)") 
 ```
 
 
