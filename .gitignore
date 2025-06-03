@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+stan/draws/
+stan/*.exe
+stan/*.rds
+job/log/
+log/
