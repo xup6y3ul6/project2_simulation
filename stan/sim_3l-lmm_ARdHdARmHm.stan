@@ -15,7 +15,7 @@ functions {
     matrix[m, m] h;
     for (i in 1:m)
       for (j in 1:m)
-        h[i, j] = phi ^ abs(i - j);
+        h[i, j] = phi ^  abs(i - j);
     return h;
   }
 }
@@ -45,12 +45,10 @@ parameters {
   real<lower=0> tau2_d;
 
   // omega_raw
-  array[N, D] vector[M] omega_raw;
   real<lower=-1, upper=1> phi_m; // autoregressive parameter between moments
   real<lower=0> tau2_m;  
 
   // epsilon_raw
-  array[N, D] vector[M] epsilon_raw;
   vector<lower=0>[M] sigma_epsilon; // population sd for the measurment error (heterogenity between moments)
 }
 
@@ -78,23 +76,13 @@ transformed parameters {
   real<lower=0> sigma_omega_m = sqrt((1 - phi_m^2) * tau2_m); 
   cov_matrix[M] H_m = ar1_corr_matrix(M, phi_m);
   cov_matrix[M] Sigma_m = tau2_m * H_m;
-  matrix[M, M] L_Sigma_m = cholesky_decompose(Sigma_m);
-  array[N, D] vector[M] omega;
-  for (i in 1:N) {
-    for (j in 1:D) {
-      omega[i, j] = L_Sigma_m * omega_raw;
-    }
-  }
   
   // epsilon
   cov_matrix[M] Sigma = diag_matrix(sigma_epsilon^2);
-  matrix[M, M] L_Sigma = cholesky_decompose(Sigma);
-  array[N, D] vector[M] epsilon;
-  for (i in 1:N) {
-    for (j in 1:D) {
-      epsilon[i, j] = L_Sigma * epsilon_raw;
-    }
-  }
+  
+  // omega+epsilon
+  cov_matrix[M] Sigma_mR = Sigma_m + Sigma;
+  matrix[M, M] L_Sigma_mR = cholesky_decompose(Sigma_mR);
 }
 
 model {
@@ -109,13 +97,11 @@ model {
     // Level 2:
     mu_ij[i] = mu_i[i] + d[i] + nu[i];
     d_raw[i] ~ std_normal();
-    nu[i] ~ multi_normal_cholesky(rep_vector(0, D), L_Sigma_d);
+    nu_raw[i] ~ std_normal();
     
     // Level 1:
     for (j in 1:D) {
-      y[((i-1)*D*M + (j-1)*M + 1):((i-1)*D*M + (j-1)*M + M)] = mu_ij[i, j] + omega[i, j] + epsilon[i, j];
-      omega_raw[i, j] ~ multi_normal_cholesky(0, L_Sigma_omega);
-      epsilon_raw[i, j] ~ multi_normal_cholesky(0, L_Sigma_m);
+      y[((i-1)*D*M + (j-1)*M + 1):((i-1)*D*M + (j-1)*M + M)] ~ multi_normal_cholesky(rep_vector(mu_ij[i, j], M), L_Sigma_mR);
     }
   }
   

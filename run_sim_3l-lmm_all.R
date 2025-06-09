@@ -14,7 +14,6 @@ cat("Generate simulated data.\n")
 library(tidyverse)
 library(cmdstanr)
 library(posterior)
-library(bayesplot)
 
 is_ARd <- str_detect(model_name, "ARd")
 is_Hd <- str_detect(model_name, "Hd")
@@ -123,22 +122,22 @@ if (dir.exists(output_dir_lmm)) {
   dir.create(output_dir_lmm, recursive = TRUE)
 }
 
-lmm_data <- lst(N = N, 
-                D = D, 
+lmm_data <- lst(N = N,
+                D = D,
                 M = M,
                 y = y)
 
 lmm <- cmdstan_model(str_glue("stan/{model_name}.stan"))
 
-lmm_fit <- lmm$sample(data = lmm_data, 
-                      chains = 4, 
+lmm_fit <- lmm$sample(data = lmm_data,
+                      chains = 4,
                       parallel_chains = 4,
-                      output_dir = output_dir_lmm, 
-                      iter_warmup = 4000, 
+                      output_dir = output_dir_lmm,
+                      iter_warmup = 4000,
                       iter_sampling = 4000,
-                      thin = 1, 
-                      seed = seed, 
-                      refresh = 1000, 
+                      thin = 1,
+                      seed = seed,
+                      refresh = 1000,
                       show_messages = TRUE)
 
 write_rds(lmm_fit, str_glue("stan/{file_name}.rds"))
