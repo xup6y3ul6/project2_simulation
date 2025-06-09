@@ -15,7 +15,7 @@
 module load R
 
 cd $VSC_DATA
-cd project2_analysis
+cd project2_simulation
 
 # Use the default settings
 # > Rscript run_sim_3l-lmm_all.R
