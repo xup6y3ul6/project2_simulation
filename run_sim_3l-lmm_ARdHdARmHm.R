@@ -1,3 +1,4 @@
+# Receive shell arguments outside the Rscript
 args <- commandArgs(trailingOnly = TRUE)
 
 model_name <- ifelse(length(args) >= 1, args[1], "sim_3l-lmm_ARdHdARmHm")
@@ -126,6 +127,6 @@ cat("Finished the MCMC sampling.\n")
 cat("Calulate the summary of MCMC draws.\n")
 
 lmm_summary <- lmm_fit$summary()
-write_csv(lmm_summary, str_glue("stan/summary/{file_name}.csv"))
+write_csv(lmm_summary, str_glue("stan/summary/{file_name}_summary.csv"))
 
 cat("Finish the simulation procedure.\n")

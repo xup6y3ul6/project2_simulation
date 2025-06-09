@@ -18,7 +18,7 @@ cd $VSC_DATA
 cd project2_analysis
 
 # Use the default settings
-# > Rscript run_sim_3l-lmm_ARdHdARmHm.R
+# > Rscript run_sim_3l-lmm_all.R
 # Give additional argument 
-# > Rscript run_sim_3l-lmm_ARdHdARmHm.R <model-name> <N> <D> <S> <Seed> [Sufix]
-Rscript run_sim_3l-lmm_ARdHdARmHm.R sim_3l-lmm_ARdHdARmHm 10 20 20 20250603 
+# > Rscript run_sim_3l-lmm_all.R <model-name> <N> <D> <S> <Seed> [Sufix]
+Rscript run_sim_3l-lmm_all.R sim_3l-lmm_ARdHdARmHm 20 20 20 20250610 

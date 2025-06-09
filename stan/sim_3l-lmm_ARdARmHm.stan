@@ -15,7 +15,7 @@ functions {
     matrix[m, m] h;
     for (i in 1:m)
       for (j in 1:m)
-        h[i, j] = phi ^ abs(i - j);
+        h[i, j] = phi ^  abs(i - j);
     return h;
   }
 }
