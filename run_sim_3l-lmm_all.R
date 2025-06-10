@@ -2,7 +2,9 @@
 args <- commandArgs(trailingOnly = TRUE)
 
 model_name <- ifelse(length(args) >= 1, args[1], "sim_3l-lmm_ARdHdARmHm")
+print(model_name)
 N <- ifelse(length(args) >= 2, as.integer(args[2]), 100)
+print(N)
 D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
 M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
 seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250610)

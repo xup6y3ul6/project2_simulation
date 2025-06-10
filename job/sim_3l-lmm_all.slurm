@@ -12,15 +12,14 @@
 #SBATCH --error=log/%x_%A_%a.err
 #SBATCH --job-name=sim_3l-all
 
-module --force purge
-module load R
-
 cd $VSC_DATA
 cd project2_simulation
+
+module load R
 
 # Use the default settings
 # > Rscript run_sim_3l-lmm_all.R
 # Give additional argument 
 # > Rscript run_sim_3l-lmm_all.R <model-name> <N> <D> <S> <Seed> [Sufix]
 # Rscript run_sim_3l-lmm_all.R sim_3l-lmm_ARdHdARmHm 20 20 20 20250610 
-Rscript run_sim_3l-lmm_all.R $model_name, $N, $D, $S, $seed
+Rscript run_sim_3l-lmm_all.R $model_name, $N, $D, $M, $seed
