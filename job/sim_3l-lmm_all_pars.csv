@@ -1,3 +1,12 @@
 model_name,N,D,M,seed
 sim_3l-lmm_,20,20,20,20250610
 sim_3l-lmm_Hm,20,20,20,20250610
+sim_3l-lmm_Hd,20,20,20,20250610
+sim_3l-lmm_ARm,20,20,20,20250610
+sim_3l-lmm_ARd,20,20,20,20250610
+sim_3l-lmm_ARmHm,20,20,20,20250610
+sim_3l-lmm_ARdHd,20,20,20,20250610
+sim_3l-lmm_ARmARd,20,20,20,20250610
+sim_3l-lmm_ARdARmHm,20,20,20,20250610
+sim_3l-lmm_ARdHdARm,20,20,20,20250610
+sim_3l-lmm_ARdHdARmHm,20,20,20,20250610
