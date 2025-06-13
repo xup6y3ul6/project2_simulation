@@ -2,12 +2,14 @@
 title: "Simulation Study for Three-Level Mixed Effect Model with Two Autoregressive Processes"
 author: "Tzu-Yao Lin"
 date: last-modified
-bibliography: references.bib
-csl: apa.csl
+# bibliography: references.bib
+# csl: apa.csl
 execute:
-  eval: false
+  eval: true
   warning: false
   cache: false
+params:
+  model_name: "default"
 format: 
   html:
     toc: true
@@ -16,7 +18,7 @@ format:
     self-contained: true
     code-fold: false
     code-tools: true
-    include-in-header: mathjax.html
+    #include-in-header: mathjax.html
 ---
 
 # Setup
@@ -45,87 +47,106 @@ Check the file `run_sim_3l-lmm_ARdHdARmHm.R1`.
 # Check Results
 
 ```{r}
-model_name <- "sim_3l-lmm_ARdHdARmHm_N10D20M20Seed20250603"
+#| label: load-data
+ 
+model_name <- params$model_name
 
 data <- read_rds(str_glue("data/{model_name}.rds"))
 names(data)
 N <- data$N
 D <- data$D
 M <- data$M
+
+is_ARd <- str_detect(model_name, "ARd")
+is_Hd <- str_detect(model_name, "Hd")
+is_ARm <- str_detect(model_name, "ARm")
+is_Hm <- str_detect(model_name, "Hm")
 ```
 
 ```{r}
 #| label: load-MCMC
 
 lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/{model_name}"), full.names = TRUE))
+#lmm_fit <- read_rds(str_glue("stan/{model_name}.rds"))
 ```
 
-All 4 chains finished successfully.
-Mean chain execution time: 2619.6 seconds.
-Total execution time: 3757.2 seconds.
-
-Warning: 1 of 4 chains had an E-BFMI less than 0.3.
-See https://mc-stan.org/misc/warnings for details.
-
-
-Check the summary results in `stan/summary/sim_3l-lmm_ARdHdARmHm.csv`
 
 
 ```{r}
+#| label: get-mcmc-draws
+ 
 lmm_draws <- lmm_fit$draws(format = "matrix")
 ```
 
 Following, I want to check the 95% HDI of the posterior distribution whether it contains the true parameter setting values. I would misus a handy function `bayesplot:ppc_XX()` on purpose to check the results, but it does not mean I'm doing the posterior predictive check.
 
-[1] "N"             "D"             "M"             "psi_s"         "s"            
- [6] "psi_d"         "d"             "phi_d"         "H_d"           "sigma_omega_d"
-[11] "tau2_d"        "Sigma_d"       "nu"            "phi_m"         "H_m"          
-[16] "sigma_omega_m" "tau2_m"        "Sigma_m"       "omega"         "sigma_epsilon"
-[21] "epsilon"       "y"        
 
 ```{r}
 order_s <- order(data$s)
 ppc_intervals(y = data$s[order_s], 
-              yrep = subset_draws(lmm_draws, variable = "s") %>% `[`(, order_s)) + 
+              yrep = subset_draws(lmm_draws, variable = "s") %>% `[`(, order_s),
+              prob_outer = 0.95) + 
   scale_x_discrete(name = "Subject effect (s)") 
 ```
 
 
 ```{r}
 order_d <- order(data$d)
-index_row <- (order_d-1) %% N + 1
-index_col <- (order_d-1) %/% N + 1
 ppc_intervals(y = data$d[order_d], 
-              yrep = subset_draws(lmm_draws, variable = "d") %>% `[`(, order_d)) +
+              yrep = subset_draws(lmm_draws, variable = "d") %>% `[`(, order_d),
+              prob_outer = 0.95) +
   scale_x_discrete(name = "Day effect (d)")
 ```
 
 
 ```{r}
-pars_phi <- c("phi_d", "phi_m")
-ppc_intervals(y = data[pars_phi] |> unlist(), 
-              yrep = subset_draws(lmm_draws, variable = pars_phi)) + 
+pars_phi <- vector("character")
+pars_tau <- vector("character")
+if (is_ARd) {
+  pars_phi <- c(pars_phi, "phi_d")
+  pars_tau <- c(pars_tau, "tau2_d")
+}
+if (is_ARm) {
+  pars_phi <- c(pars_phi, "phi_m")
+  pars_tau <- c(pars_tau, "tau2_m")
+}
+if (is_ARd || is_ARm) {
+  ppc_intervals(y = data[pars_phi] |> unlist(), 
+                yrep = subset_draws(lmm_draws, variable = pars_phi),
+                prob_outer = 0.95) + 
   scale_x_discrete(name = "Autocorrelation effects", 
                    limit = pars_phi)
-```
 
-
-```{r}
-pars_sd <- c("psi_s", "psi_d", "sigma_omega_d", "sigma_omega_m", "sigma_epsilon")
-ppc_intervals(y = data[pars_sd] |> unlist(), 
-              yrep = subset_draws(lmm_draws, variable = pars_sd)) + 
-  scale_x_discrete(name = "Standard deviations", 
-                   limits = c("psi_s", str_glue("psi_d[{j}]", j = 1:D), "sigma_omega_d", "sigma_omega_m", str_glue("sigma_epsilon[{k}]", k = 1:M)))
-```
-
-
-```{r}
-pars_tau <- c("tau2_d", "tau2_m")
-ppc_intervals(y = data[pars_tau] |> unlist(), 
+  ppc_intervals(y = data[pars_tau] |> unlist(), 
               yrep = subset_draws(lmm_draws, variable = pars_tau)) + 
   scale_x_discrete(name = "Variances for AR(1) for day and moment levels", 
                    limits = pars_tau)
+}
 ```
+
+
+```{r}
+pars_sd <- c("psi_s", "psi_d", "sigma_epsilon")
+
+pars_sd_names <- c("psi_s")
+if (is_Hd) {
+  pars_sd_names <- c(pars_sd_names, str_glue("psi_d[{j}]", j = 1:D))
+} else {
+  pars_sd_names <- c(pars_sd_names, "psi_d")
+}
+if (is_Hm) {
+  pars_sd_names <- c(pars_sd_names, str_glue("sigma_epsilon[{k}]", k = 1:M))
+} else {
+  pars_sd_names <- c(pars_sd_names, "sigma_epsilon")
+}
+
+ppc_intervals(y = data[pars_sd] |> unlist(), 
+              yrep = subset_draws(lmm_draws, variable = pars_sd),
+              prob_outer = 0.95) + 
+  scale_x_discrete(name = "Standard deviations", 
+                   limits = pars_sd_names)
+```
+
 
 ```{r}
 ppc_intervals(y = data$rel_T, 
@@ -153,7 +174,7 @@ data_predict_lmm <- data_df |>
   left_join(y_hat_summary_lmm)
 
 data_predict_lmm |> 
-  # filter(Subject %in% selected_subj) |> 
+  filter(Subject %in% sample(1:N, 5)) |> 
   mutate(Date_time = as_datetime(days(Day) + hours(Moment))) |> 
   ggplot(aes(x = Date_time, y = y)) + 
   geom_line() + geom_point() +

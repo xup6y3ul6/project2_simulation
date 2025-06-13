@@ -49,25 +49,35 @@ if (is_Hd) {
 d <- matrix(rnorm(N*D, 0, psi_d), N, D, byrow = TRUE)
 
 # autoregressive effect
-phi_d <- 0.6
-H_d <- ar1_corr_matrix(D, phi_d)
-sigma_omega_d <- 1.2
-tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
-Sigma_d <- tau2_d * H_d
 if (is_ARd) {
+  phi_d <- 0.6
+  H_d <- ar1_corr_matrix(D, phi_d)
+  sigma_omega_d <- 1.2
+  tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
+  Sigma_d <- tau2_d * H_d  
   nu <- MASS::mvrnorm(N, rep(0, D), Sigma_d)
 } else {
+  phi_d <- 0
+  H_d <- ar1_corr_matrix(D, phi_d)
+  sigma_omega_d <- 0
+  tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
+  Sigma_d <- tau2_d * H_d  
   nu <- 0
 }
 
-phi_m <- 0.3
-H_m <- ar1_corr_matrix(M, phi_m)
-sigma_omega_m <- 1 
-tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
-Sigma_m <- tau2_m * H_m
 if (is_ARm) {
+  phi_m <- 0.3
+  H_m <- ar1_corr_matrix(M, phi_m)
+  sigma_omega_m <- 1 
+  tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
+  Sigma_m <- tau2_m * H_m
   omega <- MASS::mvrnorm(N*D, rep(0, M), Sigma_m)
 } else {
+  phi_m <- 0
+  H_m <- ar1_corr_matrix(M, phi_m)
+  sigma_omega_m <- 0 
+  tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
+  Sigma_m <- tau2_m * H_m
   omega <- 0
 }
 
@@ -95,7 +105,7 @@ rel_T = (psi_s^2 + mean(psi_d^2)) / (psi_s^2 + mean(psi_d^2) + tau2_d + tau2_m +
 # observation 
 y <- beta + 
   rep(s, each = D*M) +
-  rep(d, each = M) +
+  rep(as.vector(t(d)), each = M) +
   rep(as.vector(t(nu)), each = M) +
   as.vector(t(omega)) + 
   epsilon
