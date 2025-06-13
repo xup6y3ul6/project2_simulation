@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #SBATCH --account=lp_ppw_okp
 #SBATCH --cluster=wice
-#SBATCH --partition=batch_sapphirerapids
+#SBATCH --partition=batch_icelake
 #SBATCH --nodes=1
-#SBATCH --ntasks=13
+#SBATCH --ntasks-per-node=13
 #SBATCH --cpus-per-task=4
 #SBATCH --time=1-00:00:00
 #SBATCH --mail-type=All
