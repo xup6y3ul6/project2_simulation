@@ -1,5 +1,14 @@
 # Results
 
+Three-level model for simulation studies
+- 3l: three-level
+- lmm: linear mixed-effect model
+- ARd: autoregressive process for days
+- Hd: heterogeneity of variances/standard deviations between days
+- ADm: autoregressive process for moments
+- Hm: heterogeneity of variances/standard deviations between moments
+
+
 1. [3l-lmm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm__N20D20M20Seed20250611_result.html)
 2. [3l-lmm_ARd](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D20M20Seed20250611_result.html)
 3. [3l-lmm_ARm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARm_N20D20M20Seed20250611_result.html)
