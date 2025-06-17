@@ -6,6 +6,8 @@ N <- ifelse(length(args) >= 2, as.integer(args[2]), 100)
 D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
 M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
 seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250603)
+phi_d_arg <- ifelse(length(args) >= 6) as.double(args[6], 0.5)
+
 
 cat("Start to run the simulation.\n")
 
@@ -15,11 +17,6 @@ library(tidyverse)
 library(cmdstanr)
 library(posterior)
 library(bayesplot)
-
-file_name <- str_glue("{model_name}_N{N}D{D}M{M}Seed{seed}")
-if (length(args) >= 6) {
-  file_name <- paste(file_name, args[6], sep = "_")
-}
 
 # set.seed
 set.seed(seed)
@@ -41,7 +38,7 @@ psi_d <- runif(D, 1, 2) |> sort(decreasing = TRUE)
 d <- matrix(rnorm(N*D, 0, psi_d), N, D, byrow = TRUE)
 
 # autoregressive effect
-phi_d <- 0.6
+# phi_d <- 0.6
 H_d <- ar1_corr_matrix(D, phi_d)
 sigma_omega_d <- 1.2
 tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
