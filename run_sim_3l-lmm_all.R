@@ -6,7 +6,7 @@ N <- ifelse(length(args) >= 2, as.integer(args[2]), 100)
 D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
 M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
 seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250610)
-phi_d <- ifelse(length(args) >= 6) as.double(args[6], 0.5)
+phi_d <- ifelse(length(args) >= 6, as.double(args[6]), 0.5)
 
 cat("Start to run the simulation.\n")
 
