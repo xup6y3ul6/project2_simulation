@@ -1,0 +1,4 @@
+model_name,N,D,M,seed,ARd
+sim_3l-lmm_Hd,20,40,5,20250617,0.1
+sim_3l-lmm_ARd,20,40,5,20250617,0.1
+sim_3l-lmm_ARdHd,20,40,5,20250617,0.1
