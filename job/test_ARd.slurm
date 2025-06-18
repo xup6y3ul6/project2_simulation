@@ -8,12 +8,12 @@
 #SBATCH --time=1-00:00:00
 #SBATCH --mail-type=All
 #SBATCH --mail-user=tzu-yao.lin@kuleuven.be
-#SBATCH --output=log/%x_%A_%a.out
-#SBATCH --error=log/%x_%A_%a.err
 #SBATCH --job-name=test_ARd
-cd $VSC_DATA
+
+cd $VSC_SCRATCH
 cd project2_simulation
 
 module load R
 export OMP_NUM_THREADS=1
-Rscript run_sim_3l-lmm_all.R $model_name $N $D $M $seed $ARd
+
+Rscript run_sim_3l-lmm_all.R $model_name $N $D $M $seed $ARd &> job/log/${model_name}_${N}${D}${M}${ARd}${seed}_${SLURM_JOB_ID}.log
