@@ -3,7 +3,7 @@
 #SBATCH --cluster=wice
 #SBATCH --partition=batch_icelake
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=20
+#SBATCH --ntasks-per-node=25
 #SBATCH --cpus-per-task=2
 #SBATCH --time=1-00:00:00
 #SBATCH --mail-type=All
