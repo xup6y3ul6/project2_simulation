@@ -5,7 +5,8 @@ model_name <- ifelse(length(args) >= 1, args[1], "sim_3l-lmm_ARdHdARmHm")
 N <- ifelse(length(args) >= 2, as.integer(args[2]), 100)
 D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
 M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
-seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250610)
+seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250617)
+phi_d <- ifelse(length(args) >= 6, as.double(args[6]), 0.5)
 
 cat("Start to run the simulation.\n")
 
@@ -20,10 +21,7 @@ is_Hd <- str_detect(model_name, "Hd")
 is_ARm <- str_detect(model_name, "ARm")
 is_Hm <- str_detect(model_name, "Hm")
 
-file_name <- str_glue("{model_name}_N{N}D{D}M{M}Seed{seed}")
-if (length(args) >= 6) {
-  file_name <- paste(file_name, args[6], sep = "_")
-}
+file_name <- str_glue("{model_name}_N{N}D{D}M{M}phi_d{phi_d}Seed{seed}")
 
 # set.seed
 set.seed(seed)
@@ -50,7 +48,7 @@ d <- matrix(rnorm(N*D, 0, psi_d), N, D, byrow = TRUE)
 
 # autoregressive effect
 if (is_ARd) {
-  phi_d <- 0.6
+  # phi_d <- 0.6
   H_d <- ar1_corr_matrix(D, phi_d)
   sigma_omega_d <- 1.2
   tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
