@@ -116,12 +116,13 @@ if (is_ARd || is_ARm) {
                 prob_outer = 0.95) + 
   scale_x_discrete(name = "Autocorrelation effects", 
                    limit = pars_phi)
-
+}
+if (is_ARd || is_ARm) {
   ppc_intervals(y = data[pars_tau] |> unlist(), 
               yrep = subset_draws(lmm_draws, variable = pars_tau)) + 
   scale_x_discrete(name = "Variances for AR(1) for day and moment levels", 
                    limits = pars_tau)
-}
+} 
 ```
 
 

@@ -3,7 +3,6 @@ library(tidyverse)
 
 model_names <- list.files("data") |> 
   str_subset("20250617") |> 
-  str_subset("_ARd_") |> 
   str_replace_all(".rds", "")
 model_names
 
