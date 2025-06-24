@@ -34,6 +34,10 @@ data <- read_rds(data_name)
 
 cat("Run MCMC by Stan \n")
 
+cat("SLURM_CPUS_PER_TASK = ", Sys.getenv("SLURM_CPUS_PER_TASK"), "\n")
+cat("nproc = ", parallel::detectCores(), "\n")
+
+
 output_dir_lmm = str_glue("stan/draws/{file_name}")
 
 if (dir.exists(output_dir_lmm)) {
