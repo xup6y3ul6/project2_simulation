@@ -1,0 +1,5 @@
+model_name, N, D, M, seed
+sim_3l-ssm_ARm, 20, 20, 20, 20250611
+sim_3l-ssm_ARd, 20, 20, 20, 20250611
+sim_3l-ssm_ARdARm, 20, 20, 20, 20250611
+sim_3l-ssm_ARdHdARmHm, 20, 20, 20, 20250611

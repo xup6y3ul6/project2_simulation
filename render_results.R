@@ -1,16 +1,16 @@
 library(quarto)
 library(tidyverse)
 
-model_names <- list.files("data") |> 
-  str_subset("20250617") |> 
-  str_replace_all(".rds", "")
+model_names <- list.files("stan/draws/new") |> 
+  str_subset("20250624") 
+  # str_replace_all(".rds", "")
 model_names
 
 for (m in model_names) {
   tryCatch({
     file_name <- str_glue("{m}_result.html")
     quarto::quarto_render(
-      input = "simulation_study_for_lmm_threelevel.qmd",
+      input = "ssm_fit_lmm_data.qmd",
       execute_params = list(model_name = m),
       output_file = file_name)
 
