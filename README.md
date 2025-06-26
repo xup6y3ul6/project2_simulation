@@ -17,68 +17,68 @@ Three-level model for simulation studies
 
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|             |[1](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm__N20D40M5_phi-d0.1_Seed20250624_result.html)|[2](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm__N20D200M10_phi-d0.1_Seed20250624_result.html)|
+|             |[1](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm__N20D40M5_phi-d0_Seed20250624_result.html)|[2](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm__N20D20M10_phi-d0_Seed20250624_result.html)|
 
 ## 3l-lmm_Hd
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|             |[3](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_Hd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[4](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_Hd_N20D200M10_phi-d0.1_Seed20250624_result.html)|
+|             |[3](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_Hd_N20D40M5_phi-d0_Seed20250624_result.html)|[4](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_Hd_N20D20M10_phi-d0_Seed20250624_result.html)|
 
 
 ## 3l-lmm(ssm)_ARd
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[5](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[8](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[6](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[9](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[7](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[10](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[5](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[8](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[6](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[9](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[7](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[10](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARd_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 | ssm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
 |$phi_d = 0.1$|[5'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D40M5_phi-d0.1_Seed20250624_result.html)||
-|$phi_d = 0.3$||[9'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[7'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[10'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.3$||[9'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[7'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[10'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARd_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 
 ## 3l-lmm(ssm)_ARdHd
 
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[11](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[14](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[12](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[15](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[13](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[16](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[11](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[14](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[12](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[15](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[13](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[16](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHd_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 | ssm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[11'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[14'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[12'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[15'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[13'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[16'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[11'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.1_Seed20250624_result.html)|[14'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[12'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.3_Seed20250624_result.html)|[15'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[13'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D40M5_phi-d0.5_Seed20250624_result.html)|[16'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHd_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 ## 3l-lmm(ssm)_ARdARm
 
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[17](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[20](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[18](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[21](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[19](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[22](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[17](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[20](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[18](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[21](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[19](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[22](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 | ssm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$||[20'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[18'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[21'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D200M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.1$||[20'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[18'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[21'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D20M10_phi-d0.3_Seed20250624_result.html)|
 |$phi_d = 0.5$|[19'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D40M5_phi-d0.5_Seed20250624_result.html)||
 ## 3l-lmm(ssm)_ARdHdARmHm
 
 | lmm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[23](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[26](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[24](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[27](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[25](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[28](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[23](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[26](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[24](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[27](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[25](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[28](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 | ssm         |D = 40 / M = 5|D = 20 / M = 10|
 |-------------|--------------|---------------|
-|$phi_d = 0.1$|[23'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[26'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D200M10_phi-d0.1_Seed20250624_result.html)|
-|$phi_d = 0.3$|[24'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[27'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D200M10_phi-d0.3_Seed20250624_result.html)|
-|$phi_d = 0.5$|[25'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[28'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D200M10_phi-d0.5_Seed20250624_result.html)|
+|$phi_d = 0.1$|[23'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.1_Seed20250624_result.html)|[26'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D20M10_phi-d0.1_Seed20250624_result.html)|
+|$phi_d = 0.3$|[24'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.3_Seed20250624_result.html)|[27'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D20M10_phi-d0.3_Seed20250624_result.html)|
+|$phi_d = 0.5$|[25'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[28'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 
 # Update on 2025-Jul-24
