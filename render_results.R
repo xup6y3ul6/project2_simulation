@@ -1,12 +1,12 @@
 library(quarto)
 library(tidyverse)
 
-model_names <- list.files("stan/draws") |> 
-  str_subset("ssm") 
+model_names <- list.files("stan/draws/new") |> 
+  str_subset("20250624") 
   # str_replace_all(".rds", "")
 model_names
 
-for (m in model_names[3]) {
+for (m in model_names) {
   tryCatch({
     file_name <- str_glue("{m}_result.html")
     quarto::quarto_render(

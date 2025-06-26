@@ -64,8 +64,8 @@ is_Hm <- str_detect(model_name, "Hm")
 ```{r}
 #| label: load-MCMC
 
-lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/{model_name}"), full.names = TRUE))
-#lmm_fit <- read_rds(str_glue("stan/{model_name}.rds"))
+lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/new/{model_name}"), full.names = TRUE))
+# lmm_fit <- read_rds(str_glue("stan/{model_name}.rds"))
 ```
 
 

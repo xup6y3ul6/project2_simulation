@@ -130,7 +130,7 @@ if (is_lmm) {
   # load data
   data_name <- str_glue("data/{file_name}.rds") |> str_replace("ssm", "lmm")
   data <- read_rds(data_name)
-
+  attach(data)
 }
 
 # Fit data by Bayesian approach ====
