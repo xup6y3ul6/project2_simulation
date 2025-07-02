@@ -7,7 +7,8 @@ D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
 M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
 seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250617)
 phi_d <- ifelse(length(args) >= 6, as.double(args[6]), 0.5)
-
+N = 20; D = 40; M = 5; seed = 20250617; phi_d = 0.5
+model_name = "sim_3l-lmm_ARd"
 cat("Start to run the simulation.\n")
 
 cat("Generate simulated data.\n")
@@ -138,18 +139,18 @@ lmm_data <- lst(N = N,
 lmm <- cmdstan_model(str_glue("stan/{model_name}.stan"))
 
 lmm_fit <- lmm$sample(data = lmm_data,
-                      chains = 4,
-                      parallel_chains = 4,
+                      chains = 3,
+                      parallel_chains = 3,
                       output_dir = output_dir_lmm,
-                      iter_warmup = 4000,
-                      iter_sampling = 4000,
-                      thin = 1,
+                      iter_warmup = 2000,
+                      iter_sampling = 5000,
+                      thin = 15,
                       seed = seed,
                       refresh = 1000,
                       show_messages = TRUE)
 
 write_rds(lmm_fit, str_glue("stan/{file_name}.rds"))
-
+ 
 cat("Finished the MCMC sampling.\n")
 
 cat("Calulate the summary of MCMC draws.\n")
