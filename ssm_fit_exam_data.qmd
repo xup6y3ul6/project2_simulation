@@ -1,0 +1,185 @@
+---
+title: "Exam results as the simulation setting values"
+author: "Tzu-Yao Lin"
+date: last-modified
+# bibliography: references.bib
+# csl: apa.csl
+execute:
+  eval: true
+  warning: false
+  cache: false
+params:
+  model_name: "default"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    self-contained: true
+    code-fold: false
+    code-tools: true
+    #include-in-header: mathjax.html
+---
+
+# Setup
+
+First, we need to load the necessary packages.
+
+```{r}
+#| label: load-packages
+
+library(tidyverse)
+theme_set(theme_bw(base_size = 14))
+library(lubridate)
+library(tsibble)
+library(cmdstanr)
+register_knitr_engine(override = FALSE)
+library(posterior)
+library(bayesplot)
+color_scheme_set("red")
+```
+
+
+# Check Results
+
+```{r}
+#| label: load-data
+ 
+model_name <- params$model_name
+data_name <- str_replace(model_name, "ssm", "lmm")
+
+data <- read_rds(str_glue("data/{data_name}.rds"))
+names(data)
+N <- data$N
+D <- data$D
+M <- data$M
+
+is_ARd <- str_detect(model_name, "ARd")
+is_Hd <- str_detect(model_name, "Hd")
+is_ARm <- str_detect(model_name, "ARm")
+is_Hm <- str_detect(model_name, "Hm")
+```
+
+```{r}
+#| label: load-MCMC
+lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/{model_name}"), full.names = TRUE))
+# lmm_fit <- read_rds(str_glue("stan/{model_name}.rds"))
+```
+
+
+
+```{r}
+#| label: get-mcmc-draws
+ 
+lmm_draws <- lmm_fit$draws(format = "matrix")
+```
+
+Following, I want to check the 95% HDI of the posterior distribution whether it contains the true parameter setting values. I would misus a handy function `bayesplot:ppc_XX()` on purpose to check the results, but it does not mean I'm doing the posterior predictive check.
+
+
+```{r}
+order_s <- order(data$s)
+ppc_intervals(y = data$s[order_s], 
+              yrep = subset_draws(lmm_draws, variable = "s") %>% `[`(, order_s),
+              prob_outer = 0.95) + 
+  scale_x_discrete(name = "Subject effect (s)") 
+```
+
+
+```{r}
+order_d <- order(data$d)
+ppc_intervals(y = data$d[order_d], 
+              yrep = subset_draws(lmm_draws, variable = "d") %>% `[`(, order_d),
+              prob_outer = 0.95) +
+  scale_x_discrete(name = "Day effect (d)")
+```
+
+
+```{r}
+pars_phi <- vector("character")
+pars_tau <- vector("character")
+if (is_ARd) {
+  pars_phi <- c(pars_phi, "phi_d")
+  pars_tau <- c(pars_tau, "tau2_d")
+}
+if (is_ARm) {
+  pars_phi <- c(pars_phi, "phi_m")
+  pars_tau <- c(pars_tau, "tau2_m")
+}
+if (is_ARd || is_ARm) {
+  ppc_intervals(y = data[pars_phi] |> unlist(), 
+                yrep = subset_draws(lmm_draws, variable = pars_phi),
+                prob_outer = 0.95) + 
+  scale_x_discrete(name = "Autocorrelation effects", 
+                   limit = pars_phi)
+}
+if (is_ARd || is_ARm) {
+  ppc_intervals(y = data[pars_tau] |> unlist(), 
+              yrep = subset_draws(lmm_draws, variable = pars_tau)) + 
+  scale_x_discrete(name = "Variances for AR(1) for day and moment levels", 
+                   limits = pars_tau)
+} 
+```
+
+
+```{r}
+pars_sd <- c("psi_s", "psi_d", "sigma_epsilon")
+
+pars_sd_names <- c("psi_s")
+if (is_Hd) {
+  pars_sd_names <- c(pars_sd_names, str_glue("psi_d[{j}]", j = 1:D))
+} else {
+  pars_sd_names <- c(pars_sd_names, "psi_d")
+}
+if (is_Hm) {
+  pars_sd_names <- c(pars_sd_names, str_glue("sigma_epsilon[{k}]", k = 1:M))
+} else {
+  pars_sd_names <- c(pars_sd_names, "sigma_epsilon")
+}
+
+ppc_intervals(y = data[pars_sd] |> unlist(), 
+              yrep = subset_draws(lmm_draws, variable = pars_sd),
+              prob_outer = 0.95) + 
+  scale_x_discrete(name = "Standard deviations", 
+                   limits = pars_sd_names)
+```
+
+
+```{r}
+ppc_intervals(y = data$rel_T, 
+              yrep = subset_draws(lmm_draws, variable = "rel_T")) + 
+  scale_x_discrete(name = "R_T")
+```
+
+
+# Fitting plot
+
+```{r}
+data_df <- expand.grid(Moment = 1:M, Day = 1:D, Subject = 1:N) |> 
+  add_column(y = data$y)
+
+
+.y_hat_summary_lmm <- lmm_fit$summary("y_hat", mean, median, quantile2) 
+
+y_hat_summary_lmm <- .y_hat_summary_lmm |> 
+  mutate(Indices = str_extract_all(variable, "\\d+"), 
+         Subject = map_dbl(Indices, \(x) as.integer(x[1])),
+         Day = map_dbl(Indices, \(x) as.integer(x[2])),
+         Moment = map_dbl(Indices, \(x) as.integer(x[3])))
+
+data_predict_lmm <- data_df |> 
+  left_join(y_hat_summary_lmm)
+
+data_predict_lmm |> 
+  filter(Subject %in% sample(1:N, 5)) |> 
+  mutate(Date_time = as_datetime(days(Day) + hours(Moment))) |> 
+  ggplot(aes(x = Date_time, y = y)) + 
+  geom_line() + geom_point() +
+  geom_line(aes(y = mean), linetype = "dashed", color = "red") +
+  geom_ribbon(aes(ymin = q5, ymax = q95), alpha = 0.25, fill = "red") +
+  #coord_cartesian(ylim = c(-20, 100)) +
+  scale_x_datetime(breaks = as_datetime(1:D * 86400),
+                   labels = paste0("D", 1:D)) +
+  facet_grid(Subject ~ .) 
+
+```

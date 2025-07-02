@@ -1,17 +1,10 @@
-# Receive shell arguments outside the Rscript
-args <- commandArgs(trailingOnly = TRUE)
 
-model_name <- ifelse(length(args) >= 1, args[1], "sim_3l-lmm_ARdHdARmHm")
-N <- ifelse(length(args) >= 2, as.integer(args[2]), 100)
-D <- ifelse(length(args) >= 3, as.integer(args[3]), 9)
-M <- ifelse(length(args) >= 4, as.integer(args[4]), 10)
-seed <- ifelse(length(args) >= 5, as.integer(args[5]), 20250617)
-phi_d <- ifelse(length(args) >= 6, as.double(args[6]), 0.5)
-N = 20; D = 40; M = 5; seed = 20250617; phi_d = 0.5
-model_name = "sim_3l-lmm_ARd"
-cat("Start to run the simulation.\n")
+model_name <- "exam_3l-lmm_ZARdHdARmHm"
+N <- 101
+D <- 9
+M <- 10
+seed <- 20250630
 
-cat("Generate simulated data.\n")
 # load packages
 library(tidyverse)
 library(cmdstanr)
@@ -22,10 +15,14 @@ is_Hd <- str_detect(model_name, "Hd")
 is_ARm <- str_detect(model_name, "ARm")
 is_Hm <- str_detect(model_name, "Hm")
 
-file_name <- str_glue("{model_name}_N{N}D{D}M{M}phi_d{phi_d}Seed{seed}")
+file_name <- str_glue("{model_name}_N{N}D{D}M{M}Seed{seed}")
 
 # set.seed
 set.seed(seed)
+
+# read fitted results of Exam study
+exam_summary <- read_csv("stan/summary/exam_3l-ssm_ZARdHdARmHm_Seed20250619_summary.csv")
+exam_summary
 
 # generate simulated data
 ar1_corr_matrix <- function(m, phi) {
@@ -34,58 +31,33 @@ ar1_corr_matrix <- function(m, phi) {
 }
 
 # fixed effect
-beta <- 50
+beta <- exam_summary |> filter(variable == "beta") |> pull(mean)
 
 # random effect
-psi_s <- 3
-s <- rnorm(N, 0, psi_s)
+psi_s <- exam_summary |> filter(variable == "psi_s") |> pull(mean)
+s <- exam_summary |> slice(str_which(variable, "^s\\[")) |> pull(mean)
 
-if (is_Hd) {
-  psi_d <- runif(D, 1, 2) |> sort(decreasing = TRUE)
-} else {
-  psi_d <- 1.5
-}
-d <- matrix(rnorm(N*D, 0, psi_d), N, D, byrow = TRUE)
+psi_d <- exam_summary |> slice(str_which(variable, "^psi_d\\[")) |> pull(mean)
+d <- exam_summary |> slice(str_which(variable, "^d\\[")) |> pull(mean) |> 
+  matrix(nrow = N)
 
 # autoregressive effect
-if (is_ARd) {
-  # phi_d <- 0.6
-  H_d <- ar1_corr_matrix(D, phi_d)
-  sigma_omega_d <- 1.2
-  tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
-  Sigma_d <- tau2_d * H_d  
-  nu <- MASS::mvrnorm(N, rep(0, D), Sigma_d)
-} else {
-  phi_d <- 0
-  H_d <- ar1_corr_matrix(D, phi_d)
-  sigma_omega_d <- 0
-  tau2_d <- sigma_omega_d^2 / (1 - phi_d^2)
-  Sigma_d <- tau2_d * H_d  
-  nu <- 0
-}
+phi_d <- exam_summary |> filter(variable == "phi_d") |> pull(mean)
+H_d <- ar1_corr_matrix(D, phi_d)
+sigma_omega_d <- exam_summary |> filter(variable == "sigma_omega_d") |> pull(mean)
+tau2_d <- exam_summary |> filter(variable == "tau2_d") |> pull(mean)
+Sigma_d <- tau2_d * H_d  
+nu <- MASS::mvrnorm(N, rep(0, D), Sigma_d)
 
-if (is_ARm) {
-  phi_m <- 0.3
-  H_m <- ar1_corr_matrix(M, phi_m)
-  sigma_omega_m <- 1 
-  tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
-  Sigma_m <- tau2_m * H_m
-  omega <- MASS::mvrnorm(N*D, rep(0, M), Sigma_m)
-} else {
-  phi_m <- 0
-  H_m <- ar1_corr_matrix(M, phi_m)
-  sigma_omega_m <- 0 
-  tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
-  Sigma_m <- tau2_m * H_m
-  omega <- 0
-}
+phi_m <- exam_summary |> filter(variable == "phi_m") |> pull(mean)
+H_m <- ar1_corr_matrix(M, phi_m)
+sigma_omega_m <- exam_summary |> filter(variable == "sigma_omega_m") |> pull(mean)
+tau2_m <- exam_summary |> filter(variable == "tau2_m") |> pull(mean)
+Sigma_m <- tau2_m * H_m
+omega <- MASS::mvrnorm(N*D, rep(0, M), Sigma_m)
 
 # measurement error
-if (is_Hm) {
-  sigma_epsilon <- runif(M, 0.5, 2) |> sort(decreasing = TRUE)
-} else {
-  sigma_epsilon <- 1.25
-}
+sigma_epsilon <- exam_summary |> slice(str_which(variable, "^sigma_epsilon\\[")) |> pull(mean)
 epsilon <- rnorm(N*D*M, 0, sigma_epsilon)
 
 rel_T = (psi_s^2 + mean(psi_d^2)) / (psi_s^2 + mean(psi_d^2) + tau2_d + tau2_m + mean(sigma_epsilon^2))
@@ -119,6 +91,9 @@ data <- list(N = N, D = D, M = M,
              y = y, rel_T = rel_T)
 write_rds(data, str_glue("data/{file_name}.rds"))
 
+
+exam_data <- read_rds("data/exam_data.rds")
+
 #######################################
 
 cat("Run MCMC by Stan \n")
@@ -134,23 +109,24 @@ if (dir.exists(output_dir_lmm)) {
 lmm_data <- lst(N = N,
                 D = D,
                 M = M,
-                y = y)
+                y_obs = y,
+                z_obs = exam_data$Get_grade)
 
 lmm <- cmdstan_model(str_glue("stan/{model_name}.stan"))
 
 lmm_fit <- lmm$sample(data = lmm_data,
-                      chains = 3,
-                      parallel_chains = 3,
+                      chains = 4,
+                      parallel_chains = 4,
                       output_dir = output_dir_lmm,
-                      iter_warmup = 2000,
-                      iter_sampling = 5000,
-                      thin = 15,
+                      iter_warmup = 4000,
+                      iter_sampling = 4000,
+                      thin = 1,
                       seed = seed,
                       refresh = 1000,
                       show_messages = TRUE)
 
 write_rds(lmm_fit, str_glue("stan/{file_name}.rds"))
- 
+
 cat("Finished the MCMC sampling.\n")
 
 cat("Calulate the summary of MCMC draws.\n")
