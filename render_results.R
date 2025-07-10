@@ -2,7 +2,7 @@ library(quarto)
 library(tidyverse)
 
 model_names <- list.files("stan/draws") |> 
-  str_subset("exam") 
+  str_subset("20250702") 
   # str_replace_all(".rds", "")
 model_names
 

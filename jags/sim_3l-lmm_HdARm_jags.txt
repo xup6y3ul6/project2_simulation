@@ -1,0 +1,45 @@
+
+  model {
+    # Priors
+    beta ~ dnorm(0, 0.001)
+    
+    psi_s ~ dt(0, 1/6.25, 3)T(0,) #SD for random effects for subjects
+    prec_s <- 1 / pow(psi_s, 2)
+
+    for (j in 1:D) {
+      psi_d[j] ~ dt(0, 1/6.25, 3)T(0,) # (hetero) SD for random effects for days
+      prec_d[j] <- 1 / pow(psi_d[j], 2)
+    }
+   
+    # for (k in 1:M) {
+    #   sigma_epsilon[k] ~ dt(0, 1/6.25, 3)T(0,) #SD for error
+    #   prec_epsilon[k] <- 1 / pow(sigma_epsilon[k], 2)
+    # }
+    sigma_epsilon ~ dt(0, 1/6.25, 3)T(0,) #SD for error
+    prec_epsilon <- 1 / pow(sigma_epsilon, 2)
+    
+    sigma_omega_m ~ dt(0, 1/6.25, 3)T(0,) #SD for AR(1) process
+    prec_omega_m <- 1 / pow(sigma_omega_m, 2)
+    
+    phi_m ~ dnorm(0, 4)T(-1,1)  #autocorrelation
+        
+    # Likelihood
+    for (i in 1:N) {
+      s[i] ~ dnorm(0, prec_s)
+
+      for (j in 1:D) {
+        d[i, j] ~ dnorm(0, prec_d[j])
+        mu_ij[i, j] <- beta + s[i] + d[i, j]
+
+        for (k in 1:M) {
+          # y[i, j, k] ~ dnorm(mu_ij[i, j], prec_epsilon[k])
+          y[i, j, k] ~ dnorm(mu_ij[i, j], prec_epsilon)
+        }
+      }
+    }
+    
+    #Derived quantity: relative total variance (R_T)
+    tau2_m <- sigma_omega_m^2 / (1 - phi_m^2)
+    rel_T <- (psi_s^2 + mean(psi_d^2)) / (psi_s^2 + mean(psi_d^2) + tau2_m + mean(sigma_epsilon^2))
+  }
+
