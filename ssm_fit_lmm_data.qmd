@@ -47,7 +47,13 @@ color_scheme_set("red")
  
 model_name <- params$model_name
 
-data_name <- str_replace(model_name, "ssm", "lmm")
+is_ssm <-  str_detect(model_name, "ssm")
+
+if (is_ssm) {
+  data_name <- str_replace(model_name, "ssm", "lmm")
+} else {
+  data_name <- model_name
+}
 
 data <- read_rds(str_glue("data/{data_name}.rds"))
 names(data)
@@ -64,7 +70,7 @@ is_Hm <- str_detect(model_name, "Hm")
 ```{r}
 #| label: load-MCMC
 
-lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/new/{model_name}"), full.names = TRUE))
+lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/{model_name}"), full.names = TRUE))
 # lmm_fit <- read_rds(str_glue("stan/{model_name}.rds"))
 ```
 
@@ -73,11 +79,70 @@ lmm_fit <- as_cmdstan_fit(list.files(str_glue("stan/draws/new/{model_name}"), fu
 ```{r}
 #| label: get-mcmc-draws
  
-lmm_draws <- lmm_fit$draws(format = "matrix")
+lmm_draws <- lmm_fit$draws(format = "matrix") 
 ```
 
 Following, I want to check the 95% HDI of the posterior distribution whether it contains the true parameter setting values. I would misus a handy function `bayesplot:ppc_XX()` on purpose to check the results, but it does not mean I'm doing the posterior predictive check.
 
+
+## MCMC check
+
+
+Fixed and random effects
+```{r}
+#| label: lmm-trace-fix-and-random-effect
+selected_subj <- c(1, 3, 5, 7, 9, 11, 13, 15, 17)
+mcmc_trace(lmm_draws, pars = "beta")
+lmm_draws |> subset_draws(variable = paste0("s[", selected_subj, "]")) |> mcmc_trace()
+mcmc_trace(lmm_draws, regex_pars = "^d\\[8,\\d+\\]")
+```
+
+```{r}
+#| label: lmm-trace-fix-and-random-sd
+mcmc_trace(lmm_draws, pars = "psi_s", regex_pars = "psi_d")
+```
+
+
+Autoregressive parameters
+```{r}
+#| label: lmm-trace-phi
+pars_phi <- vector("character")
+pars_tau <- vector("character")
+if (is_ARd) {
+  pars_phi <- c(pars_phi, "phi_d")
+  pars_tau <- c(pars_tau, "tau2_d")
+}
+if (is_ARm) {
+  pars_phi <- c(pars_phi, "phi_m")
+  pars_tau <- c(pars_tau, "tau2_m")
+}
+if (is_ARd || is_ARm) {
+  mcmc_trace(lmm_draws, pars = pars_phi)
+}
+```
+
+```{r}
+#| label: lmm-trace-tau
+if (is_ARd || is_ARm) {
+  mcmc_trace(lmm_draws, pars = pars_tau)
+}
+```
+
+Measurement errors
+
+```{r}
+#| label: lmm-trace-error
+mcmc_trace(lmm_draws, regex_pars = "sigma_epsilon")
+```
+
+Reliability
+```{r}
+#| label: lmm-trace-rel
+mcmc_trace(lmm_draws, pars = c("rel_T"))
+```
+
+
+## Recovery
 
 ```{r}
 order_s <- order(data$s)

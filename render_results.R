@@ -6,11 +6,11 @@ model_names <- list.files("stan/draws") |>
   # str_replace_all(".rds", "")
 model_names
 
-for (m in model_names[2]) {
+for (m in model_names) {
   tryCatch({
     file_name <- str_glue("{m}_result.html")
     quarto::quarto_render(
-      input = "ssm_fit_exam_data.qmd",
+      input = "ssm_fit_lmm_data.qmd",
       execute_params = list(model_name = m),
       output_file = file_name)
 
@@ -22,4 +22,3 @@ for (m in model_names[2]) {
     cat(str_glue("Error: {e$message}\n"))
   })  
 }
-

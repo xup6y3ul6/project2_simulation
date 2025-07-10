@@ -10,7 +10,7 @@ Three-level model for simulation studies
 - Hm: heterogeneity of variances/standard deviations between moments
 
 
-# Update on 2025-Jul-26
+# Update on 2025-Jun-24
 
 
 ## 3l-lmm
@@ -81,7 +81,7 @@ Three-level model for simulation studies
 |$phi_d = 0.5$|[25'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D40M5_phi-d0.5_Seed20250624_result.html)|[28'](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D20M10_phi-d0.5_Seed20250624_result.html)|
 
 
-# Update on 2025-Jul-24
+# Update on 2025-Jul-02
 
 | Original | SSM representation |
 |----------|--------------------|
@@ -96,9 +96,10 @@ Three-level model for simulation studies
 |9. [3l-lmm_ARdARm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARm_N20D20M20Seed20250611_result.html) | 9'. [3l-ssm_ARdARm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdARm_N20D20M20Seed20250611_result.html) |
 |10. [3l-lmm_ARdARmHm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdARmHm_N20D20M20Seed20250611_result.html) | |
 |11. [3l-lmm_ARdHdARmHm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_ARdHdARmHm_N20D20M20Seed20250611_result.html) | 11'. [3l-ssm_ARdHdARmHm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_ARdHdARmHm_N20D20M20Seed20250611_result.html) |
+|12. [3l-lmm_HdARmHm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-lmm_HdARmHm_N20D20M20_phi-d0.5_Seed20250702_result.html) | 12'. [3l-ssm_HdARmHm](https://xup6y3ul6.github.io/project2_simulation/results/sim_3l-ssm_HdARmHm_N20D20M20_phi-d0.5_Seed20250702_result.html) |
 
 
-# Update on 2025-Jul-19
+# Update on 2025-Jun-19
 
 ## 3l-lmm
 |             |D = 40 / M = 5|D = 20 / M = 10|
